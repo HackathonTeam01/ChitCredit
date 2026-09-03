@@ -1,0 +1,8 @@
+{
+  "name": "chit-credit-member-c",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

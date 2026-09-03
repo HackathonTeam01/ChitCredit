@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "description": "Centralized credit offer mapping rules connecting score tiers to NBFC working capital terms.",
+  "partner_nbfc_name": "ChitCredit Demo NBFC Partner (Simulated)",
+  "disclaimer": "This pre-approved credit offer is a simulated mock calculation for demonstration purposes and does not represent a legally binding credit agreement.",
+  "tier_offers": {
+    "Not Yet Eligible": {
+      "eligible_amount": 0,
+      "interest_rate": 0.0,
+      "term_months": 0,
+      "is_eligible": false,
+      "message": "Not yet eligible for pre-approved working capital. Build a 3-month payment streak to unlock Bronze tier."
+    },
+    "Bronze": {
+      "eligible_amount": 5000,
+      "interest_rate": 18.0,
+      "term_months": 12,
+      "is_eligible": true,
+      "message": "Bronze starter credit limit unlocked."
+    },
+    "Silver": {
+      "eligible_amount": 15000,
+      "interest_rate": 14.0,
+      "term_months": 24,
+      "is_eligible": true,
+      "message": "Silver working capital limit unlocked at preferential interest rate."
+    },
+    "Gold": {
+      "eligible_amount": 30000,
+      "interest_rate": 11.0,
+      "term_months": 36,
+      "is_eligible": true,
+      "message": "Gold prime credit line unlocked at lowest available interest rate."
+    }
+  }
+}

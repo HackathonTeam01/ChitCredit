@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ChitCreditScoreResponse",
+  "description": "Canonical contract for Chit Credit Score response payload",
+  "type": "object",
+  "required": [
+    "member_id",
+    "on_time_pct",
+    "streak_count",
+    "tenure_cycles",
+    "score_value",
+    "score_band"
+  ],
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "description": "Unique identifier of the chit circle member"
+    },
+    "on_time_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage of lifetime contributions made on or before the due date"
+    },
+    "streak_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Current consecutive count of on-time chit contributions"
+    },
+    "tenure_cycles": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of completed chit fund cycles or tenure milestones"
+    },
+    "score_value": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Normalized Chit Credit Score clamped between 0 and 100"
+    },
+    "score_band": {
+      "type": "string",
+      "enum": ["Not Yet Eligible", "Bronze", "Silver", "Gold"],
+      "description": "Credit tier classification derived deterministically from score_value"
+    },
+    "breakdown": {
+      "type": "object",
+      "description": "Additive, explainable breakdown of score formula components",
+      "properties": {
+        "on_time_component": { "type": "number" },
+        "streak_component": { "type": "number" },
+        "tenure_component": { "type": "number" },
+        "missed_payment_penalty": { "type": "number" },
+        "raw_score": { "type": "number" },
+        "clamped_score": { "type": "integer" },
+        "weights": {
+          "type": "object",
+          "properties": {
+            "w1_on_time": { "type": "number" },
+            "w2_streak": { "type": "number" },
+            "w3_tenure": { "type": "number" },
+            "w4_missed_penalty": { "type": "number" }
+          }
+        },
+        "normalization_convention": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

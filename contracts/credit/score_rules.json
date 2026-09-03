@@ -1,0 +1,59 @@
+{
+  "version": "1.0.0",
+  "description": "Centralized, deterministic scoring rules, weights, normalizations, and tier bands for Chit Credit Score.",
+  "weights": {
+    "w1_on_time_pct": 0.5,
+    "w2_streak_count": 0.2,
+    "w3_tenure_cycles": 0.2,
+    "w4_missed_penalty": 0.1
+  },
+  "normalization_conventions": {
+    "note": "Implementation convention: The blueprint specifies weights w1=0.5, w2=0.2, w3=0.2, w4=0.1 on mixed-scale inputs without specifying individual scaling. Normalization caps streak and tenure at 10 cycles mapped to a 0-100 scale, and scales missed payments by 10 points per missed payment.",
+    "on_time_pct": {
+      "min": 0,
+      "max": 100,
+      "scale": 1.0
+    },
+    "streak_count": {
+      "cap": 10,
+      "scale_multiplier": 10.0
+    },
+    "tenure_cycles": {
+      "cap": 10,
+      "scale_multiplier": 10.0
+    },
+    "missed_payment_penalty": {
+      "multiplier": 10.0
+    },
+    "score_clamp": {
+      "min": 0,
+      "max": 100
+    }
+  },
+  "tier_bands": [
+    {
+      "band": "Not Yet Eligible",
+      "min_score": 0,
+      "max_score": 49,
+      "description": "Insufficient on-time history or high missed payments; below credit unlock threshold"
+    },
+    {
+      "band": "Bronze",
+      "min_score": 50,
+      "max_score": 69,
+      "description": "Emerging credit history with solid foundation"
+    },
+    {
+      "band": "Silver",
+      "min_score": 70,
+      "max_score": 84,
+      "description": "Consistent track record of timely chit contributions"
+    },
+    {
+      "band": "Gold",
+      "min_score": 85,
+      "max_score": 100,
+      "description": "Flawless payment discipline, high streak and mature tenure"
+    }
+  ]
+}

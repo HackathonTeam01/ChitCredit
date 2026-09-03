@@ -112,3 +112,34 @@ class MockDataProvider(DataProvider):
                 "contributions": contributions,
             }
         return members
+
+
+def get_default_data_provider() -> DataProvider:
+    """
+    Factory function returning the configured DataProvider.
+
+    Configuration:
+      - A2_DATA_PROVIDER: "mock" (default) or "http" (explicit live integration mode).
+      - If A2_DATA_PROVIDER is unset or "mock": returns MockDataProvider().
+      - If A2_DATA_PROVIDER is "http": returns HttpDataProvider using A1_API_BASE_URL.
+        Raises ValueError if A1_API_BASE_URL is missing or empty.
+      - If A2_DATA_PROVIDER is set to an unrecognized value: raises ValueError.
+    """
+    import os
+    provider_mode = os.environ.get("A2_DATA_PROVIDER", "mock").strip().lower()
+
+    if not provider_mode or provider_mode == "mock":
+        return MockDataProvider()
+    elif provider_mode == "http":
+        base_url = os.environ.get("A1_API_BASE_URL", "").strip()
+        if not base_url:
+            raise ValueError(
+                "A2_DATA_PROVIDER is configured as 'http', but A1_API_BASE_URL is missing or empty. "
+                "Please set A1_API_BASE_URL (e.g. 'http://10.28.73.240:5000')."
+            )
+        from backend.a2.integration.http_data_provider import HttpDataProvider
+        return HttpDataProvider(base_url=base_url)
+    else:
+        raise ValueError(
+            f"Invalid A2_DATA_PROVIDER '{provider_mode}'. Expected 'mock' or 'http'."
+        )

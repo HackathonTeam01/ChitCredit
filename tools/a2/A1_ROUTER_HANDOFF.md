@@ -122,8 +122,9 @@ if __name__ == "__main__":
 ## 6. Architecture & DataProvider Extensibility
 
 The A2 architecture uses an abstract `DataProvider` interface (`backend/a2/integration/data_provider.py`).
-- **Currently:** Uses `MockDataProvider` (contains 18 demo personas + edge cases).
-- **Future A1 Integration:** A1 can pass a database-backed `A1DataProvider` to `ScoreService(data_provider=a1_provider)` and `OfferService(data_provider=a1_provider)` without modifying the underlying scoring formulas or offer logic.
+- **HTTP Adapter for A1:** `HttpDataProvider` (`backend/a2/integration/http_data_provider.py`) connects directly to Person A1's REST endpoints over HTTP when `A1_API_BASE_URL` is set (e.g. `A1_API_BASE_URL=http://10.28.73.240:5000`).
+- **Offline / Local Fallback:** `MockDataProvider` is used automatically when `A1_API_BASE_URL` is not configured, allowing offline testing and frontend preview without requiring a live database.
+- **Zero Module Coupling:** Person A2 never imports private A1 Python code or ORM models; all communication happens strictly via HTTP JSON contracts.
 
 ---
 

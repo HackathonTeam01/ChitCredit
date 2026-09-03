@@ -33,7 +33,7 @@ def check_git_status() -> bool:
         print("Failed to run git status")
         return False
 
-    lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    raw_lines = [line for line in result.stdout.splitlines() if line.strip()]
     allowed_prefixes = (
         "backend/a2/",
         "contracts/credit/",
@@ -43,7 +43,9 @@ def check_git_status() -> bool:
     )
 
     violations = []
-    for line in lines:
+    for line in raw_lines:
+        # Porcelain output has exactly 2 characters for status, then space, then filename
+        # e.g., " M backend/a2/api/routes.py" or "?? tools/a2/A1_ROUTER_HANDOFF.md"
         filepath = line[3:].strip().strip('"')
         # Normalize slashes for Windows
         filepath_normalized = filepath.replace("\\", "/")

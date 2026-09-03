@@ -68,8 +68,10 @@ class MockDataProvider(DataProvider):
 
     @staticmethod
     def _default_mock_members() -> Dict[str, Dict[str, Any]]:
-        # 18 representative members covering all credit tiers
+        # 18 representative circle members plus test-suite personas (1, CHT-001, CHT-EMPTY)
         seed_data = [
+            ("1", "Arun Kumar", 98.0, 10, 8, 0, "Gold"),
+            ("CHT-001", "Arun Kumar", 98.0, 10, 8, 0, "Gold"),
             ("CHT-009", "Arun Kumar", 98.0, 10, 8, 0, "Gold"),
             ("CHT-010", "Meena S.", 95.0, 8, 6, 0, "Silver"),
             ("CHT-011", "Ravi Prakash", 75.0, 4, 3, 2, "Silver"),
@@ -88,10 +90,18 @@ class MockDataProvider(DataProvider):
             ("CHT-024", "Asha R.", 80.0, 5, 3, 0, "Silver"),
             ("CHT-025", "Karthik S.", 97.0, 10, 8, 0, "Gold"),
             ("CHT-026", "Nandhini V.", 83.0, 6, 4, 0, "Silver"),
+            ("CHT-INELIGIBLE", "Ineligible Member", 20.0, 0, 0, 5, "Not Yet Eligible"),
+            ("CHT-EMPTY", "New Member", 0.0, 0, 0, 0, "Not Yet Eligible"),
         ]
 
         members = {}
         for mid, name, on_time, streak, tenure, missed, _ in seed_data:
+            contributions = []
+            if mid != "CHT-EMPTY":
+                contributions = [
+                    {"date": "2024-08-24", "amount": 500, "on_time": True, "mode": "IppoPay UPI"},
+                    {"date": "2024-07-24", "amount": 500, "on_time": True, "mode": "Wallet reserve"},
+                ]
             members[mid] = {
                 "id": mid,
                 "name": name,
@@ -99,9 +109,6 @@ class MockDataProvider(DataProvider):
                 "streak_count": streak,
                 "tenure_cycles": tenure,
                 "missed_payment_count": missed,
-                "contributions": [
-                    {"date": "2024-08-24", "amount": 500, "on_time": True, "mode": "IppoPay UPI"},
-                    {"date": "2024-07-24", "amount": 500, "on_time": True, "mode": "Wallet reserve"},
-                ],
+                "contributions": contributions,
             }
         return members

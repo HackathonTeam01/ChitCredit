@@ -24,9 +24,12 @@ def get_member_score(
     Retrieve the canonical Chit Credit Score for a given member.
     Delegates strictly to A2 ScoreService.
     """
+    if not member_id or not member_id.strip():
+        raise HTTPException(status_code=400, detail="member_id must be a non-empty string")
+
     try:
         score_result = default_score_service.get_score_for_member(
-            member_id=member_id,
+            member_id=member_id.strip(),
             include_breakdown=include_breakdown,
         )
         return score_result.to_dict()
@@ -47,9 +50,12 @@ def get_member_credit_offer(
     Retrieve the pre-approved NBFC credit offer based on member's score tier.
     Delegates strictly to A2 OfferService.
     """
+    if not member_id or not member_id.strip():
+        raise HTTPException(status_code=400, detail="member_id must be a non-empty string")
+
     try:
         offer_result = default_offer_service.get_offer_for_member(
-            member_id=member_id,
+            member_id=member_id.strip(),
             unlock_date=unlock_date,
         )
         return offer_result.to_dict()

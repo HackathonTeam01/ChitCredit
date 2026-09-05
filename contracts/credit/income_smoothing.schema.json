@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Income Smoothing Result",
+  "type": "object",
+  "required": ["amount_due", "trailing_window", "base_pct", "days", "target_reached_date", "auto_payment"],
+  "properties": {
+    "amount_due": { "type": "number", "exclusiveMinimum": 0 },
+    "trailing_window": { "type": "integer", "minimum": 1 },
+    "base_pct": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+    "target_reached_date": { "type": ["string", "null"] },
+    "days": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "daily_earning", "trailing_average", "reserve_pct", "reserve_amount", "wallet_balance"],
+        "properties": {
+          "date": { "type": "string" },
+          "daily_earning": { "type": "number", "minimum": 0 },
+          "trailing_average": { "type": "number", "minimum": 0 },
+          "reserve_pct": { "type": "number", "minimum": 0, "maximum": 1 },
+          "reserve_amount": { "type": "number", "minimum": 0 },
+          "wallet_balance": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
+    "auto_payment": {
+      "type": ["object", "null"],
+      "required": ["status", "date", "amount", "source"],
+      "properties": {
+        "status": { "const": "ready" },
+        "date": { "type": "string" },
+        "amount": { "type": "number", "minimum": 0 },
+        "source": { "const": "savings_wallet" }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Elastic Repayment Result",
+  "type": "object",
+  "required": ["loan_balance", "deduction_pct", "remaining_balance", "paid_off", "schedule"],
+  "properties": {
+    "loan_balance": { "type": "number", "minimum": 0 },
+    "deduction_pct": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+    "remaining_balance": { "type": "number", "minimum": 0 },
+    "paid_off": { "type": "boolean" },
+    "schedule": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["day", "daily_earning", "deduction_pct", "deduction_amount", "remaining_balance", "slow_period_predicted"],
+        "properties": {
+          "day": { "type": "integer", "minimum": 1 },
+          "daily_earning": { "type": "number", "minimum": 0 },
+          "deduction_pct": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+          "deduction_amount": { "type": "number", "minimum": 0 },
+          "remaining_balance": { "type": "number", "minimum": 0 },
+          "slow_period_predicted": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

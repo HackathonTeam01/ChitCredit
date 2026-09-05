@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreditOfferResponse",
+  "description": "Canonical contract for Chit Credit Offer response payload",
+  "type": "object",
+  "required": [
+    "member_id",
+    "eligible_amount",
+    "interest_rate",
+    "unlock_date",
+    "partner_nbfc"
+  ],
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "description": "Unique identifier of the chit circle member"
+    },
+    "eligible_amount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Pre-approved working capital limit in INR"
+    },
+    "interest_rate": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Annualized percentage rate (APR) in percentage points"
+    },
+    "unlock_date": {
+      "type": "string",
+      "description": "ISO-8601 date string or timestamp when the credit offer was generated/unlocked"
+    },
+    "partner_nbfc": {
+      "type": "string",
+      "description": "Name of the NBFC partner issuing the simulated credit facility"
+    },
+    "is_eligible": {
+      "type": "boolean",
+      "description": "Additive flag indicating whether member meets the minimum threshold for loan issuance"
+    },
+    "score_band": {
+      "type": "string",
+      "enum": ["Not Yet Eligible", "Bronze", "Silver", "Gold"],
+      "description": "Additive score band that unlocked this offer"
+    },
+    "term_months": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Additive recommended loan tenure in months"
+    },
+    "disclaimer": {
+      "type": "string",
+      "description": "Additive clear notice that the offer is simulated mock data for hackathon demo"
+    }
+  },
+  "additionalProperties": false
+}

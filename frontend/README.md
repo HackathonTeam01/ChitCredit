@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Chit Credit
 
 React + Tailwind frontend for Chit Credit, an alternative credit signal for gig and informal workers.
@@ -39,7 +38,10 @@ The smoothing chart expects Member C's fixed output contract as a prop: a runnin
 
 ## Contract note
 
-`schema.json` was not present in this workspace during implementation. Demo fallback values are isolated in `src/App.jsx`; replace them only after Member A shares the exact schema fields. The operator endpoint is intentionally shown as `/group/:id/members`; no alternate endpoint is invented.
-=======
-# ChitCredit
->>>>>>> 1338785e3adebbe2420091041b7580e0de516ed5
+The C product endpoints are:
+
+- `POST /smoothing/reserve` for the variable reserve wallet contract.
+- `POST /repayment/simulate` for elastic repayment schedules.
+- `GET /member/:id/forecast?earnings=420,280,...` for the optional slow-period forecast.
+
+Payment confirmation posts to `/contribution`; the API response's `auto_payment_event` drives the notification feed. Set `VITE_API_BASE_URL` to the running backend URL for the integrated demo.
